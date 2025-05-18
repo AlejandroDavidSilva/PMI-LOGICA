@@ -22,7 +22,6 @@ alumno(a2).
 alumno(a3).
 alumno(a4).
 alumno(a5).
-alumno(a6).
 
 listaAlumnos[a1,a2,a3,a4,a5].
 
