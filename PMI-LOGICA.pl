@@ -24,13 +24,24 @@ alumno(a4).
 alumno(a5).
 
 
-%listaAlumnos[a1,a2,a3,a4,a5].
+%listaAlumnos(a1,a2,a3,a4,a5).
 
 
-preferencia(a1,l1,l2,l3).
-preferencia(a2,l6,l7,l4).
-preferencia(a3,l3,l4,l5).
-preferencia(a4,l8,l9,l10).
+preferencia(a1,l1).
+preferencia(a1,l5).
+preferencia(a1,l7).
+
+preferencia(a2,l5).
+preferencia(a2,l4).
+preferencia(a2,l9).
+
+preferencia(a3,l1).
+preferencia(a3,l2).
+preferencia(a3,l3).
+
+
+
+%QUE PASA SI ALUMNO SOLO ME DA 2 O 4 O MAS DE 4 RECOMENDACIONES DE LIBRO, DEBO REALIZAR OTRO PREDICADO?
 
 libro_asignado(a1,l1).
 libro_asignado(a2,l7).
@@ -48,9 +59,8 @@ prestado(l8).
 %asignacion(a4,l7,l8)
 %asignacion(a5,l9,l10)
 
-preferencia_alumno(X) :- preferencias(X,A,B,C).
+preferencia_alumno(ALUMNO,LIBRO) :- preferencia(ALUMNO,LIBRO).
 
-
-
+libro_prestado(LIBRO) :- prestado(LIBRO).
 
 
