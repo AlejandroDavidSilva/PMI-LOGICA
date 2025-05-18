@@ -23,6 +23,7 @@ alumno(a3).
 alumno(a4).
 alumno(a5).
 
+
 listaAlumnos[a1,a2,a3,a4,a5].
 
 
@@ -41,3 +42,5 @@ preferencia(a3,l3).
 %Todos los casos de asignacion de libros, preferencias de libros, listado de libros y demas deben estar definidas en mi base de conocimiento?
 
 preferencia(X,Y) :- alumno(X) , libro(Y).
+
+%hola xd
