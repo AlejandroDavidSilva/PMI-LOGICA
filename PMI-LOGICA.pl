@@ -31,7 +31,7 @@ alumno(a5).
 %-------------------------------------------------------------------------------------------
 
 
-%listaAlumnos(a1,a2,a3,a4,a5).
+%alumnos(a1,a2,a3,a4,a5).
 
 %---------------------------------PREFERENCIAS------------------------------------------
 preferencia(a1,l1).
@@ -53,10 +53,10 @@ preferencia(a3,l3).
 %QUE PASA SI ALUMNO SOLO ME DA 2 O 4 O MAS DE 4 RECOMENDACIONES DE LIBRO, DEBO REALIZAR OTRO PREDICADO?
 
 %------------------------------------LIBRO ASIGNADO-------------------------------------------------------
-libro_asignado(a1,l1).
-libro_asignado(a2,l7).
-libro_asignado(a3,l3).
-libro_asignado(a2,l8).
+%libro_asignado(a1,l1).
+%libro_asignado(a2,l7).
+%libro_asignado(a3,l3).
+%libro_asignado(a2,l8).
 
 %-------------------------------------------------------------------------------------------
 
@@ -75,21 +75,27 @@ prestado(l8).
 
 siguiendo_curso(X) :- preferencia(X, _).
 
- asignacionLibro_valida(Alumno, Libro) :-
+asignacionLibro_valida(Alumno, Libro) :-
     alumno(Alumno),
-    preferencia(Alumno, Libro),
+    preferencia(Alumno, Libro),  % aca verifica que haya dado preferencia, x lo tanto, sigue cursando
     not(prestado(Libro)),
     libro(Libro).
 
 generar_asignaciones([], []).  % caso base: sin alumnos, sin asignaciones, caso en el que corta la iteracion recursiva
-
-generar_asignaciones([Alumno | RestoAlumnos], [(Alumno, Libro) | RestoAsignaciones]) :-
-    siguiendo_curso(Alumno),
+generar_asignaciones([Alumno | RestoAlumnos], [(Alumno, Libro) | RestoAsignaciones]):-
+    %siguiendo_curso(Alumno),
     asignacionLibro_valida(Alumno, Libro),
-    generar_asignaciones(RestoAlumnos, RestoAsignaciones),
-    \+ member((_, Libro), RestoAsignaciones).  % asegurar que el libro no se repite
+    generar_asignaciones(RestoAlumnos, RestoAsignaciones).
 
-alumnos_activos(ListaActivos) :-
-    setof(A, L^preferencia(A, L), ListaActivos).
+
+
+
+
+
+
+
+
+    %\+ member((_, Libro), RestoAsignaciones).  % asegurar que el libro no se repite
+    
     
 %-------------------------------------------------------------------------------------------
