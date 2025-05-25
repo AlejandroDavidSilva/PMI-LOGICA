@@ -15,6 +15,7 @@ libro(l7).
 libro(l8).
 libro(l9).
 libro(l10).
+
 %todos los libros creados, son los recomenda la profesora
 
 %listaLibros_sugeridos_profe[l1,l2,l3,l4,l5,l6,l7,l8,l9,l10].
@@ -72,7 +73,23 @@ prestado(l8).
 
 %libro_prestado(LIBRO) :- prestado(LIBRO).
 
-siguiendo_curso(X) :- preferencia(X, _).                   %COMO EVITAR QUE ITERE MAS DE 1 VEZ CON EL MISMO ALUMNO
+siguiendo_curso(X) :- preferencia(X, _).
 
+ asignacionLibro_valida(Alumno, Libro) :-
+    alumno(Alumno),
+    preferencia(Alumno, Libro),
+    not(prestado(Libro)),
+    libro(Libro).
 
+generar_asignaciones([], []).  % caso base: sin alumnos, sin asignaciones, caso en el que corta la iteracion recursiva
+
+generar_asignaciones([Alumno | RestoAlumnos], [(Alumno, Libro) | RestoAsignaciones]) :-
+    siguiendo_curso(Alumno),
+    asignacionLibro_valida(Alumno, Libro),
+    generar_asignaciones(RestoAlumnos, RestoAsignaciones),
+    \+ member((_, Libro), RestoAsignaciones).  % asegurar que el libro no se repite
+
+alumnos_activos(ListaActivos) :-
+    setof(A, L^preferencia(A, L), ListaActivos).
+    
 %-------------------------------------------------------------------------------------------
