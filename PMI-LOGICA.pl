@@ -68,14 +68,11 @@ prestado(l8).
 
 
 %-------------------------------------REGLAS------------------------------------------------------
-preferencia_alumno(ALUMNO,LIBRO) :- preferencia(ALUMNO,LIBRO).
+%preferencia_alumno(ALUMNO,LIBRO) :- preferencia(ALUMNO,LIBRO).
 
-libro_prestado(LIBRO) :- prestado(LIBRO).
+%libro_prestado(LIBRO) :- prestado(LIBRO).
 
 siguiendo_curso(X) :- preferencia(X, _).                   %COMO EVITAR QUE ITERE MAS DE 1 VEZ CON EL MISMO ALUMNO
-
-
-                
 
 
 %-------------------------------------------------------------------------------------------
