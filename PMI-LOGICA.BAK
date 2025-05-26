@@ -81,19 +81,21 @@ asignacionLibro_valida(Alumno, Libro) :-
     not(prestado(Libro)),
     libro(Libro).
 
-generar_asignaciones([], []).  % caso base: sin alumnos, sin asignaciones, caso en el que corta la iteracion recursiva
-generar_asignaciones([Alumno | RestoAlumnos], [(Alumno, Libro) | RestoAsignaciones]):-
-    %siguiendo_curso(Alumno),
+
+no_asignado(_,[]).
+no_asignado(Libro, [LibroAsignado|RestoLibros]):-
+                   Libro \= LibroAsignado,
+                   no_asignado(Libro, RestoLibros).
+
+agregar_libro(Libro, LibrosAsignados, [Libro|LibrosAsignados]):- true.
+
+
+generar_asignaciones([], _, _).  % caso base: sin alumnos, sin asignaciones, caso en el que corta la iteracion recursiva
+generar_asignaciones([Alumno | RestoAlumnos], [(Alumno, Libro) | RestoAsignaciones], LibrosAsignados):-
+
     asignacionLibro_valida(Alumno, Libro),
-    generar_asignaciones(RestoAlumnos, []).
+    no_asignado(Libro, LibrosAsignados); agregar_libro(Libro, LibrosAsignados, LibrosAsignados),
+    generar_asignaciones(RestoAlumnos, RestoAsignaciones, LibrosAsignados).
 
-
-
-
-
-
-
-    %\+ member((_, Libro), RestoAsignaciones).  % asegurar que el libro no se repite
-    
     
 %-------------------------------------------------------------------------------------------
