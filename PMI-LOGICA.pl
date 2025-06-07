@@ -90,13 +90,29 @@ no_asignado(Libro, [LibroAsignado|RestoLibros]):-
 
 agregar_libro(Libro, LibrosAsignados, [Libro|LibrosAsignados]).
 
+%-------------------------------------Funcion MIEMBRO------------------------------------------------------
+miembo(X,[X|_]).
+miembro(X,[_|Y]) :- miembro(X,Y).
+
+%----------------------------------------------------------------------------------------------------------------
+
+%-------------------------------------Funcion QUITAR LIBRO------------------------------------------------------
+quitarLibro(_,[],[]).
+quitarLibro(Libro, [LibroCabeza|RestoListaLibros], ListaLibrosModif):-
+    Libro\=LibroCabeza,                                         %l5  [] --> [l1,l2,l3,l4,l6,l7,l8,l9,l10]+[]
+    quitarLibro(Libro,RestoListaLibros,[LibroCabeza|ListaLibroModif]).
+quitarLibro(Libro, [LibroCabeza|RestoListaLibros] , ListaLibroModif ):-
+    quitarLibro(Libro, RestoListaLibros, ListaLibroModif).
+
+
+%----------------------------------------------------------------------------------------------------------------
 
 generar_asignaciones([], [], _).  % caso base: sin alumnos, sin asignaciones, caso en el que corta la iteracion recursiva
 generar_asignaciones([Alumno | RestoAlumnos], [(Alumno, Libro) | RestoAsignaciones], ListaLibros):-
     preferencia(Alumno, Libro),
-    member(Libro,ListaLibros),
-    not(prestado(Libro)),
-    quitarLibro(Libro, ListaLibros, ListaLibrosMODIF),
+    miembro(Libro,ListaLibros),
+    (not(prestado(Libro))),
+    quitarLibro(Libro, ListaLibros, ListaLibrosMODIF),                                            %([l1,l2,l3,l4,l5,l6,l7,l8,l9,l10]). --> ([l1,l2,l3,l4,l6,l7,l8,l9,l10]).
     generar_asignaciones(RestoAlumnos, RestoAsignaciones, ListaLibrosMODIF).
 generar_asignaciones([Alumno | RestoAlumnos], RestoAsignaciones, ListaLibros):-
      generar_asignaciones(RestoAlumnos, RestoAsignaciones, ListaLibros).
@@ -104,6 +120,8 @@ generar_asignaciones([Alumno | RestoAlumnos], RestoAsignaciones, ListaLibros):-
     
 
 
+
+   /*
     armarLista(listaLibros_sugeridos_profe)
     asignacionLibro_valida(Alumno, Libro),
     no_asignado(Libro, LibrosAsignados);
@@ -115,17 +133,23 @@ generar_asignaciones([], _, _).  % caso base: sin alumnos, sin asignaciones, cas
 generar_asignaciones([Alumno | RestoAlumnos], [(Alumno, Libro) | RestoAsignaciones], [Libro, RestoLibros]):-
                              asignacionLibro_valida(Alumno, Libro),
 
-
-
+              */
+              
+              
+              
+/*
 solucion(Alumnos , P , M ):-
                  alumnos(A),
+                 listaLibros(L),                        %L es una lista de libros sin asignar aun
+                 generar_asignaciones(A ,Alumnos, L ),  %la lista que le paso a la funcion es una copia de la lista, no es la lista por direccion
+                 calcular_Porcentaje(A, P),
+                 calcular_Media(A, M ).
+
+  */
+solucion(Alumnos):-
+                 alumnos(A),
                  listaLibros(L),
-                 generar_asignaciones(A ,Alumnos, L ),
-                 calcular_Porcentaje(alumnos(A), P),
-                 calcular_Media(alumnos(A), M).
-
-
-
+                 generar_asignaciones(A ,Alumnos, L ).
 
     
 %-------------------------------------------------------------------------------------------
